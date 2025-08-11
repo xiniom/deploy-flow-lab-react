@@ -9,10 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Say Hello World
-        run: echo "Hello World!"
-      - name: show dir structure with ls
-        run: ls -R
       - name: Get current date and time
         id: date
         run: echo "::set-output name=now::$(date +'%Y%m%d%H%M%S')"
@@ -21,7 +17,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          files: ./Dockerfile
           push: true
           tags: |
             localhost:5001/deploy-flow-lab-react:latest
