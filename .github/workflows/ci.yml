@@ -11,4 +11,16 @@ jobs:
     steps:
       - name: Say Hello World
         run: echo "Hello World!"
-        
+      - name: Get current date and time
+        id: date
+        run: echo "::set-output name=now::$(date +'%Y%m%d%H%M%S')"
+      - name: Build and Push Docker Image
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          files: ./Dockerfile
+          push: true
+          tags: |
+            localhost:5001/deploy-flow-lab-react:latest
+            localhost:5001/deploy-flow-lab-react:${{ steps.date.outputs.now }}
